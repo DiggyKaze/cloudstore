@@ -1,0 +1,150 @@
+/* Grundinställningar */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+/* --- NAVIGATIONS-MENY --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px 50px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.nav-links-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* <--- Denna trycker länkarna till högerkant! */
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #555;
+    margin-left: 25px; /* Skapar mellanrum till vänster om varje länk */
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #007bff;
+}
+
+/* Styling för alla knappar i menyn (Home, Register, Login) */
+.nav-btn {
+    background-color: #007bff; /* Blå bakgrund */
+    color: #000000 !important;   /* Vit text */
+    padding: 8px 20px;         /* Mellanrum inuti knappen */
+    border-radius: 20px;       /* Gör knappen rundad som en cirkel/piller */
+    text-decoration: none;     /* Tar bort understreck */
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+/* Effekt när man håller muspekaren över någon av knapparna */
+.nav-btn:hover {
+    background-color: #ffffff; /* Mörkare blå vid hover */
+    color: white !important;
+}
+
+/* --- INNEHÅLL STARTSIDA --- */
+.content-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.welcome-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* --- FORMULÄR (LOGIN & REGISTER) --- */
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Centrerar formulären vertikalt på skärmen */
+}
+
+.form-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-container h2 {
+    margin-bottom: 25px;
+    color: #222;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #666;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.form-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+
+.form-footer a {
+    color: #007bff;
+    text-decoration: none;
+}

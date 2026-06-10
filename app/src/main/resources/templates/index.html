@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${title}">Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1 th:text="${message}">Welcome</h1>
-    <p th:if="${user}" th:text="'Hello, ' + ${user} + '!'"></p>
-    <ul th:if="${items}">
-        <li th:each="item : ${items}" th:text="${item}"></li>
-    </ul>
+    <nav class="navbar">
+        <div class="nav-links-right">
+            <a th:href="@{/}" class="nav-link nav-btn">Home</a>
+            <a th:href="@{/register}" class="nav-link nav-btn">Register</a>
+            <a th:href="@{/login}" class="nav-link nav-btn">Login</a>
+        </div>
+    </nav>
+
+    <main class="content-container">
+        <h1 th:text="${message}">Welcome to Spring Boot with Thymeleaf</h1>
+        <p>Hello, <span th:text="${user}">Guest</span>!</p>
+
+        <div class="welcome-box">
+            <h2>Välkommen till vår butik</h2>
+            <p>Här kommer du snart att kunna se produkter från FakeStore API.</p>
+        </div>
+    </main>
 </body>
 </html>
