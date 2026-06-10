@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.caniz.AppTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-06-04T09:34:28.740Z" hostname="DESKTOP-EN5QQBM" time="1.499">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.caniz.AppTests" time="0.418"/>
+  <system-out><![CDATA[11:34:28.855 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.caniz.AppTests]: AppTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:34:28.930 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.caniz.App for test class com.caniz.AppTests
+11:34:28.997 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.caniz.AppTests]: AppTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:34:28.998 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.caniz.App for test class com.caniz.AppTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.4)
+
+2026-06-04T11:34:29.200+02:00  INFO 24292 --- [    Test worker] com.caniz.AppTests                       : Starting AppTests using Java 25.0.1 with PID 24292 (started by Lotus in C:\Users\Lotus\ws\intro-java\app)
+2026-06-04T11:34:29.201+02:00  INFO 24292 --- [    Test worker] com.caniz.AppTests                       : No active profile set, falling back to 1 default profile: "default"
+2026-06-04T11:34:29.631+02:00  INFO 24292 --- [    Test worker] o.s.b.w.a.WelcomePageHandlerMapping      : Adding welcome page: class path resource [static/index.html]
+2026-06-04T11:34:29.813+02:00  INFO 24292 --- [    Test worker] com.caniz.AppTests                       : Started AppTests in 0.768 seconds (process running for 1.69)
+]]></system-out>
+  <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\Lotus\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.17.8\f09415827a71be7ed621c7bd02550678f28bc81c\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
