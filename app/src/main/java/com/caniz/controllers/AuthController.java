@@ -1,18 +1,49 @@
 package com.caniz.controllers;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@RestController
+@Controller
 @RequestMapping("/auth")
 public class AuthController{
 
-	@PostMapping("/login")
-	public String login(){
-		return "login succesful";
+	@GetMapping("/login")
+	public String showLoginForm() {
+		return "login";
 	}
+
+    @GetMapping("/register")
+    public String showRegisterForm() {
+        return "register";
+    }
+
+	@PostMapping("/login")
+	public String login(@RequestParam String username, @RequestParam String password, Model model){
+		// Add authentication logic here
+		if (username != null && password != null) {
+			return "redirect:/";
+		}
+		model.addAttribute("error", "Invalid credentials");
+		return "login";
+	}
+
+    @PostMapping("/register")
+    public String register(@RequestParam String username, @RequestParam String password, Model model){
+
+        // Add authentication logic here
+       if (username != null && password != null) {
+            return "redirect:/";
+        }
+
+        model.addAttribute("error", "Invalid credentials");
+        return "register";
+    }
+
+
 
 	@PostMapping("/refresh")
 	public String refresh(){
