@@ -1,150 +1,128 @@
-/* Grundinställningar */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
 }
 
 body {
-    background-color: #f4f6f9;
-    color: #333;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
 }
 
-/* --- NAVIGATIONS-MENY --- */
 .navbar {
+    background: #111827;
+    color: white;
+    padding: 18px 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ffffff;
-    padding: 15px 50px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.nav-brand a {
+    color: white;
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .nav-links-right {
     display: flex;
-    align-items: center;
-    margin-left: auto; /* <--- Denna trycker länkarna till högerkant! */
+    gap: 15px;
 }
 
 .nav-link {
+    color: white;
     text-decoration: none;
-    color: #555;
-    margin-left: 25px; /* Skapar mellanrum till vänster om varje länk */
-    font-weight: 500;
-    transition: color 0.2s;
 }
 
-.nav-link:hover, .nav-link.active {
-    color: #007bff;
-}
-
-/* Styling för alla knappar i menyn (Home, Register, Login) */
 .nav-btn {
-    background-color: #007bff; /* Blå bakgrund */
-    color: #000000 !important;   /* Vit text */
-    padding: 8px 20px;         /* Mellanrum inuti knappen */
-    border-radius: 20px;       /* Gör knappen rundad som en cirkel/piller */
-    text-decoration: none;     /* Tar bort understreck */
-    font-weight: 500;
-    transition: background-color 0.2s;
+    background: #2563eb;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: 0.2s;
 }
 
-/* Effekt när man håller muspekaren över någon av knapparna */
 .nav-btn:hover {
-    background-color: #ffffff; /* Mörkare blå vid hover */
-    color: white !important;
+    background: #1d4ed8;
 }
 
-/* --- INNEHÅLL STARTSIDA --- */
 .content-container {
     max-width: 1100px;
-    margin: 40px auto;
-    padding: 0 20px;
+    margin: 60px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.content-container h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.content-container > p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #555;
 }
 
 .welcome-box {
-    background-color: white;
-    padding: 30px;
-    border-radius: 8px;
-    margin-top: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-
-/* --- FORMULÄR (LOGIN & REGISTER) --- */
-.form-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh; /* Centrerar formulären vertikalt på skärmen */
-}
-
-.form-container {
-    background-color: white;
+    background: white;
     padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    width: 100%;
-    max-width: 400px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
 }
 
-.form-container h2 {
-    margin-bottom: 25px;
-    color: #222;
-    text-align: center;
+.welcome-box h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.welcome-box p {
+    font-size: 18px;
+    color: #555;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    font-size: 14px;
-    color: #666;
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
 }
 
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 15px;
-    transition: border-color 0.2s;
+.feature-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: 0.2s;
 }
 
-.form-group input:focus {
-    outline: none;
-    border-color: #007bff;
+.feature-card:hover {
+    transform: translateY(-5px);
 }
 
-.submit-btn {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s;
+.feature-card h3 {
+    margin-bottom: 12px;
+    color: #2563eb;
 }
 
-.submit-btn:hover {
-    background-color: #0056b3;
+.feature-card p {
+    color: #555;
+    line-height: 1.5;
 }
 
-.form-footer {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 14px;
-    color: #666;
-}
+@media (max-width: 768px) {
+    .navbar {
+        padding: 18px 25px;
+        flex-direction: column;
+        gap: 15px;
+    }
 
-.form-footer a {
-    color: #007bff;
-    text-decoration: none;
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .content-container h1 {
+        font-size: 32px;
+    }
 }

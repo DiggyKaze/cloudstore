@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+xmlns:th="http://www.thymeleaf.org"
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" th:href="@{/css/shop.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/products}" class="nav-link">Produkts</a>
+    </nav>
+
+    <main class="container">
+        <h1>Cart</h1>
+
+        <div class="cart-list">
+            <div class="cart-item" th:each="item : ${cartItems}">
+                <h2 th:text="${item.title}"></h2>
+                <p class="price" th:text="${item.price} + ' kr'"></p>
+
+                <form th:action="@{/cart/remove/{id}(id=${item.id})}" method="post">
+                    <button type="submit" class="danger-btn">Ta bort</button>
+                </form>
+            </div>
+        </div>
+
+        <form th:action="@{/orders/create}" method="post">
+            <button type="submit" class="order-btn">Create Order</button>
+        </form>
+    </main>
+</body>
+</html>
