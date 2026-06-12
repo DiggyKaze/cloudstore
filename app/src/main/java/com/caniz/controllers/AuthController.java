@@ -23,7 +23,7 @@ public class AuthController{
 
 	@PostMapping("/login")
 	public String login(@RequestParam String username, @RequestParam String password, Model model){
-		// Add authentication logic here
+
 		if (username != null && password != null) {
 			return "redirect:/";
 		}
@@ -34,7 +34,7 @@ public class AuthController{
     @PostMapping("/register")
     public String register(@RequestParam String username, @RequestParam String password, Model model){
 
-        // Add authentication logic here
+
        if (username != null && password != null) {
             return "redirect:/";
         }

@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class IndexController {
+public class HomeController {
 
     @GetMapping("/")
     public String index(Model model) {
@@ -14,6 +14,6 @@ public class IndexController {
         model.addAttribute("message", "Welcome to CloudStore");
 
 
-        return "index";
+        return "home";
     }
 }

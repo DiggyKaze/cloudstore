@@ -1,12 +1,99 @@
 <!DOCTYPE html>
-xmlns:th="http://www.thymeleaf.org"
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Product</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Products</title>
+
     <link rel="stylesheet" th:href="@{/css/shop.css}">
 </head>
+
 <body>
+
+<nav class="navbar">
+    <div class="nav-brand">
+        <a th:href="@{/}">
+            CloudStore
+        </a>
+    </div>
+
+    <div class="nav-links-right">
+        <a th:href="@{/}" class="nav-link nav-btn">Home
+        </a>
+
+        <button type="button"
+                class="nav-link nav-btn cart-btn" onclick="openCart()">Cart
+        </button>
+    </div>
+</nav>
+
+<main class="content-container">
+
+    <h1>Produkter</h1>
+
+    <div class="product-grid" th:if="${products != null and !#arrays.isEmpty(products)}">
+
+        <div class="product-card" th:each="product : ${products}">
+
+            <img th:src="${product.image}" alt="Product image">
+
+            <h2 th:text="${product.title}"></h2>
+
+            <p class="price"
+               th:text="${product.price} + ' kr'"></p>
+
+            <button type="button">
+                Add to Cart
+            </button>
+
+        </div>
+
+    </div>
+
+
+</main>
+
+<div id="cartOverlay" class="cart-overlay" onclick="closeCart()"></div>
+
+<div id="cartDrawer" class="cart-drawer">
+
+    <div class="cart-header">
+        <h2>Cart List</h2>
+        <button class="close-btn" onclick="closeCart()">×</button>
+    </div>
+
+    <div class="cart-content">
+        <div id="emptyCart" class="empty-cart">
+            <div class="empty-cart-icon">🛒</div>
+            <h3>Empty Cart</h3>
+        </div>
+    </div>
+
+    <div class="cart-footer">
+        <div class="cart-total">
+            Total: <span id="cartTotal">0</span> kr
+        </div>
+
+        <a th:href="@{/orders}" class="checkout-btn">
+            Go to Checkout
+        </a>
+    </div>
+
+</div>
+
+<script>
+    function openCart() {
+        document.getElementById("cartDrawer").classList.add("open");
+        document.getElementById("cartOverlay").classList.add("show");
+    }
+
+    function closeCart() {
+        document.getElementById("cartDrawer").classList.remove("open");
+        document.getElementById("cartOverlay").classList.remove("show");
+    }
+</script>
 
 </body>
 </html>

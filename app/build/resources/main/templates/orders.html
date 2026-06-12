@@ -1,25 +1,50 @@
 <!DOCTYPE html>
-xmlns:th="http://www.thymeleaf.org"
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My orders</title>
-    <link rel="stylesheet" th:href="@{/css/shop.css}">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/shop.css}">
 </head>
+
 <body>
-    <nav class="navbar">
-        <a th:href="@{/}" class="brand">CloudStore</a>
-        <a th:href="@{/products}" class="nav-btn">Produkter</a>
-    </nav>
 
-    <main class="container">
-        <h1>Mina beställningar</h1>
+<nav class="navbar">
 
-        <div class="order-card" th:each="order : ${orders}">
-            <h2 th:text="'Order #' + ${order.id}"></h2>
-            <p th:text="${order.createdAt}"></p>
-            <p class="price" th:text="${order.totalPrice} + ' kr'"></p>
-        </div>
-    </main>
+    <div class="nav-brand">
+        <a th:href="@{/}">
+            CloudStore
+        </a>
+    </div>
+
+    <div class="nav-links-right">
+
+        <a th:href="@{/}"
+           class="nav-link nav-btn">
+            Home
+        </a>
+
+    </div>
+
+</nav>
+
+<main class="content-container">
+
+    <h1>My Orders</h1>
+
+    <div class="order-card">
+        <h2>No orders yet</h2>
+        <p>
+            Products from FakeStore API will appear here after checkout.
+        </p>
+
+    </div>
+
+</main>
+
 </body>
 </html>
