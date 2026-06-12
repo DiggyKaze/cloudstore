@@ -1,0 +1,18 @@
+FROM gradle:8.11-jdk23 AS build
+
+WORKDIR /app
+
+COPY app/build.gradle app/settings.gradle* ./
+COPY app/src ./src
+
+RUN gradle clean bootJar --no-daemon
+
+FROM eclipse-temurin:23-jre
+
+WORKDIR /app
+
+COPY --from=build /app/build/libs/*.jar app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
