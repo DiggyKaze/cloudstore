@@ -49,7 +49,7 @@ tasks.register("bootDev", BootRun){
 	description = 'this is using profile Dev'
 
 	classpath = sourceSets.main.runtimeClasspath
-	mainClass = tasks.bootRun.mainClass§
+	mainClass = tasks.bootRun.mainClass
 	systemProperty 'spring.profiles.active', 'dev'
 }
 

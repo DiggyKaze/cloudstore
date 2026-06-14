@@ -29,6 +29,7 @@
             <img th:src="${product.image}" th:alt="${product.title}">
             <h3 th:text="${product.title}"></h3>
             <p class="price" th:text="${product.price} + ' kr'"></p>
+
             <button class="add-to-cart-btn"
                     th:data-id="${product.id}" th:data-title="${product.title}"
                     th:data-price="${product.price}" onclick="addToCart(this)">Add to Cart
