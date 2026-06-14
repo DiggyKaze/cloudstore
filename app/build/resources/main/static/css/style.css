@@ -84,8 +84,8 @@ body {
 }
 
 .features {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    justify-content: center; /* centrerar korten */
     gap: 25px;
 }
 
@@ -93,8 +93,10 @@ body {
     background: white;
     padding: 30px;
     border-radius: 16px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); /* lite starkare skugga */
+    border: 1px solid #e8e8e8; /* tydligare kant */
     transition: 0.2s;
+    width: 300px; /* fast bredd så de ser likadana ut */
 }
 
 .feature-card:hover {
@@ -111,18 +113,20 @@ body {
     line-height: 1.5;
 }
 
-@media (max-width: 768px) {
-    .navbar {
-        padding: 18px 25px;
-        flex-direction: column;
-        gap: 15px;
-    }
 
-    .features {
-        grid-template-columns: 1fr;
-    }
 
-    .content-container h1 {
-        font-size: 32px;
-    }
+
+
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #1a1a2e;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: center; /* ändrat från flex-end till center */
+}
+
+.footer-nav .nav-btn {
+    color: white;
 }
