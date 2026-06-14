@@ -1,23 +1,27 @@
 package com.caniz.services;
 
 import com.caniz.models.AppUser;
+import com.caniz.persistency.model.User;
+import com.caniz.persistency.repositories.UserRepository;
 import com.caniz.security.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class UserService {
-
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final Map<String, AppUser> users = new ConcurrentHashMap<>();
 
-    public UserService(PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+    public UserService(PasswordEncoder passwordEncoder, JwtUtil jwtUtil, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
     }
 
     public void register(String username, String email, String password) {
@@ -37,6 +41,8 @@ public class UserService {
     }
 
     public AppUser findByUsername(String username) {
+        Optional<User> user = userRepository.findByName(username);
         return users.get(username);
+
     }
 }
