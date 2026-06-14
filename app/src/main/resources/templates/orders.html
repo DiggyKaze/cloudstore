@@ -33,18 +33,60 @@
 </nav>
 
 <main class="content-container">
-
     <h1>My Orders</h1>
-
-    <div class="order-card">
-        <h2>No orders yet</h2>
-        <p>
-            Products from FakeStore API will appear here after checkout.
-        </p>
-
+    <div id="orderItems"></div>
+    <div class="cart-total">
+        Total: <span id="orderTotal">0</span> kr
     </div>
-
+    <button class="nav-btn" onclick="confirmOrder()">Confirm Order</button>
 </main>
+
+<script>
+    // Hämta kundvagnen från sessionStorage (skickades från shop-sidan)
+    // Om inget finns, använd en tom lista []
+    const cart = JSON.parse(sessionStorage.getItem("cart") || "[]");
+
+    // Hämta elementet där vi ska visa varorna
+    const container = document.getElementById("orderItems");
+
+    // Håller koll på totalpriset
+    let total = 0;
+
+    // Loopa igenom varje vara i vagnen
+    cart.forEach(item => {
+        // Lägg till varans pris till totala priset
+        total += item.price * item.quantity;
+
+        // Skapa ett HTML-element för varan
+        const div = document.createElement("div");
+        div.className = "order-item";
+        div.innerHTML = `
+            <div>
+                <h2>${item.title}</h2>
+                <p>Antal: ${item.quantity}</p>
+            </div>
+            <span class="order-item-price">${(item.price * item.quantity).toFixed(2)} kr</span>
+        `;
+        container.appendChild(div);
+    });
+
+    document.getElementById("orderTotal").textContent = total.toFixed(2);
+
+
+    function confirmOrder() {
+        fetch("/orders/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(cart)
+        }).then(res => {
+
+            if (res.ok) {
+                sessionStorage.removeItem("cart");
+                window.location.href = "/order-confirmation";
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

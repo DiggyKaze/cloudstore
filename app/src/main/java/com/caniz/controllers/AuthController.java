@@ -1,52 +1,61 @@
 package com.caniz.controllers;
 
+import com.caniz.dto.RegisterDto;
+import com.caniz.services.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping
-public class AuthController{
+public class AuthController {
 
-	@GetMapping("/login")
-	public String showLoginForm() {
-		return "login";
-	}
+    private final UserService userService;
+
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/register")
-    public String showRegisterForm() {
+    public String registerPage(Model model) {
+        model.addAttribute("registerDto", new RegisterDto());
         return "register";
     }
-
-	@PostMapping("/login")
-	public String login(@RequestParam String username, @RequestParam String password, Model model){
-
-		if (username != null && password != null) {
-			return "redirect:/";
-		}
-		model.addAttribute("error", "Invalid credentials");
-		return "login";
-	}
 
     @PostMapping("/register")
-    public String register(@RequestParam String username, @RequestParam String password, Model model){
-
-
-       if (username != null && password != null) {
-            return "redirect:/";
+    public String register(@ModelAttribute RegisterDto dto, Model model) {
+        try {
+            userService.register(dto.getUsername(), dto.getEmail(), dto.getPassword());
+            return "redirect:/";  // → tillbaka till hemsidan efter registrering
+        } catch (RuntimeException e) {
+            model.addAttribute("error", e.getMessage());
+            return "register";
         }
-
-        model.addAttribute("error", "Invalid credentials");
-        return "register";
     }
 
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
 
+    @PostMapping("/login")
+    public String login(@RequestParam String username, @RequestParam String password, HttpServletResponse response, Model model) {
 
-	@PostMapping("/refresh")
-	public String refresh(){
-		return "refresh succesful";
-	}
+        String token = userService.login(username, password);
+
+        if (token == null) {
+            model.addAttribute("error", "Fel användarnamn eller lösenord");
+            return "login";
+        }
+
+        // Spara JWT i en HTTP-only cookie
+        Cookie cookie = new Cookie("jwt", token);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60); // 1 timme
+        response.addCookie(cookie);
+
+        return "redirect:/products";
+    }
 }
