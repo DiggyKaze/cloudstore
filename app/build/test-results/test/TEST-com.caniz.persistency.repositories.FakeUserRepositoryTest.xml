@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.caniz.persistency.repositories.FakeUserRepositoryTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-06-14T13:47:10.199Z" hostname="DESKTOP-EN5QQBM" time="0.05">
+  <properties/>
+  <testcase name="findByName_unknownName_returnsEmpty()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.039"/>
+  <testcase name="save_duplicateEmail_throwsException()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.003"/>
+  <testcase name="save_assignsId_andFindByIdReturnsUser()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.003"/>
+  <testcase name="existsById_trueForSaved_falseForDeleted()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
+  <testcase name="findByName_returnsUser()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
+  <testcase name="count_reflectsCurrentSize()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
+  <testcase name="findByEmail_returnsUser()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
+  <testcase name="findById_unknownId_returnsEmpty()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
+  <testcase name="save_existingId_updatesUser()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
+  <testcase name="returnedUser_isDefensiveCopy_mutationDoesNotAffectStore()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
+  <testcase name="deleteById_removesUserAndIndexes()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
+  <testcase name="findByEmail_unknownEmail_returnsEmpty()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
