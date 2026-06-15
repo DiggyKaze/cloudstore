@@ -7,6 +7,8 @@ import com.caniz.security.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -44,5 +46,8 @@ public class UserService {
         Optional<User> user = userRepository.findByName(username);
         return users.get(username);
 
+    }
+    public List<AppUser> findAll() {
+        return new ArrayList<>(users.values());
     }
 }

@@ -5,6 +5,7 @@ import com.caniz.persistency.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -146,5 +147,74 @@ class FakeUserRepositoryTest {
 
         assertThat(repo.findById(saved.getId()))
                 .hasValueSatisfying(u -> assertThat(u.getName()).isEqualTo("Karl"));
+    }
+
+    // ------------------------------------------------------------------
+// findAll
+// ------------------------------------------------------------------
+    @Test
+    void findAll_returnsAllUsers() {
+        repo.save(new User("Alice", "alice@example.com"));
+        repo.save(new User("Bob", "bob@example.com"));
+
+        assertThat(repo.findAll())
+                .hasSize(2)
+                .extracting(User::getName)
+                .containsExactlyInAnyOrder("Alice", "Bob");
+    }
+
+    @Test
+    void saveAll_savesMultipleUsers() {
+
+        repo.saveAll(List.of(
+                new User("Alice", "alice@example.com"),
+                new User("Bob", "bob@example.com")
+        ));
+
+        assertThat(repo.count()).isEqualTo(2);
+    }
+
+    @Test
+    void findAllById_returnsMatchingUsers() {
+
+        User alice = repo.save(new User("Alice", "alice@example.com"));
+        User bob = repo.save(new User("Bob", "bob@example.com"));
+
+        List<User> result = repo.findAllById(
+                List.of(alice.getId(), bob.getId()));
+
+        assertThat(result).hasSize(2);
+    }
+
+    @Test
+    void delete_removesUser() {
+
+        User user = repo.save(new User("Alice", "alice@example.com"));
+
+        repo.delete(user);
+
+        assertThat(repo.findById(user.getId())).isEmpty();
+    }
+
+    @Test
+    void deleteAll_clearsRepository() {
+
+        repo.save(new User("Alice", "alice@example.com"));
+        repo.save(new User("Bob", "bob@example.com"));
+
+        repo.deleteAll();
+
+        assertThat(repo.count()).isZero();
+    }
+
+    @Test
+    void deleteAllById_removesUsers() {
+
+        User a = repo.save(new User("A", "a@test.com"));
+        User b = repo.save(new User("B", "b@test.com"));
+
+        repo.deleteAllById(List.of(a.getId(), b.getId()));
+
+        assertThat(repo.count()).isZero();
     }
 }
