@@ -10,21 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-/**
- * Thread-safe, in-memory fake implementation of {@link UserRepository}.
- *
- * <p>Design notes:
- * <ul>
- *   <li>{@code store}      — primary index, keyed by generated ID.</li>
- *   <li>{@code emailIndex} — secondary unique index for O(1) email look-ups.</li>
- *   <li>{@code nameIndex}  — secondary index for O(1) name look-ups.</li>
- *   <li>All write operations are {@code synchronized} on {@code this} so that
- *       the primary store and both indexes are always mutated together atomically,
- *       while reads on the individual ConcurrentHashMaps remain lock-free.</li>
- *   <li>Every returned entity is a defensive copy so callers cannot accidentally
- *       corrupt stored state.</li>
- * </ul>
- */
+
 @Repository
 public class FakeUserRepository implements UserRepository {
 

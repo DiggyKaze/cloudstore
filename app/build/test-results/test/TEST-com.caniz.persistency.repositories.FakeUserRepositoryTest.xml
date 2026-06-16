@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.caniz.persistency.repositories.FakeUserRepositoryTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-06-15T08:19:32.239Z" hostname="DESKTOP-EN5QQBM" time="0.053">
+<testsuite name="com.caniz.persistency.repositories.FakeUserRepositoryTest" tests="18" skipped="0" failures="0" errors="0" timestamp="2026-06-16T11:42:37.974Z" hostname="DESKTOP-EN5QQBM" time="0.072">
   <properties/>
-  <testcase name="findAll_returnsAllUsers()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.038"/>
-  <testcase name="findAllById_returnsMatchingUsers()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
+  <testcase name="findAll_returnsAllUsers()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.056"/>
+  <testcase name="findAllById_returnsMatchingUsers()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
   <testcase name="findByName_unknownName_returnsEmpty()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
-  <testcase name="saveAll_savesMultipleUsers()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
-  <testcase name="deleteAllById_removesUsers()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
-  <testcase name="deleteAll_clearsRepository()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
+  <testcase name="saveAll_savesMultipleUsers()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.002"/>
+  <testcase name="deleteAllById_removesUsers()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
+  <testcase name="deleteAll_clearsRepository()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
   <testcase name="save_duplicateEmail_throwsException()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.002"/>
-  <testcase name="save_assignsId_andFindByIdReturnsUser()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.002"/>
+  <testcase name="save_assignsId_andFindByIdReturnsUser()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.003"/>
   <testcase name="existsById_trueForSaved_falseForDeleted()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
   <testcase name="findByName_returnsUser()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
   <testcase name="count_reflectsCurrentSize()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
   <testcase name="findByEmail_returnsUser()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
-  <testcase name="findById_unknownId_returnsEmpty()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
+  <testcase name="findById_unknownId_returnsEmpty()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
   <testcase name="save_existingId_updatesUser()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
-  <testcase name="returnedUser_isDefensiveCopy_mutationDoesNotAffectStore()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
+  <testcase name="returnedUser_isDefensiveCopy_mutationDoesNotAffectStore()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
   <testcase name="deleteById_removesUserAndIndexes()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
-  <testcase name="delete_removesUser()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
-  <testcase name="findByEmail_unknownEmail_returnsEmpty()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.001"/>
+  <testcase name="delete_removesUser()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
+  <testcase name="findByEmail_unknownEmail_returnsEmpty()" classname="com.caniz.persistency.repositories.FakeUserRepositoryTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
