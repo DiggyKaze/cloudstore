@@ -13,9 +13,22 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class ProductService {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    
 
     private final Map<Long, Product> products = new ConcurrentHashMap<>();
+
+    private final RestTemplate restTemplate = createRestTemplateWithUserAgent();
+
+    private static RestTemplate createRestTemplateWithUserAgent() {
+        RestTemplate template = new RestTemplate();
+        template.getInterceptors().add((request, body, execution) -> {
+            request.getHeaders().set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
+            return execution.execute(request, body);
+        });
+        return template;
+    }
+
+
 
     @PostConstruct
     public void loadProductsOnStartup() {
