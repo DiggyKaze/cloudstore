@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 env:
-  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/intro-java
+  IMAGE_NAME: diggykaze/intro-java
 
 jobs:
   build-and-push:
