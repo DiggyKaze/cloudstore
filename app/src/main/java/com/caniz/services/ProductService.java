@@ -19,32 +19,30 @@ public class ProductService {
 
     @PostConstruct
     public void loadProductsOnStartup() {
-        refreshProducts();
+        try {
+            refreshProducts();
+        } catch (Exception e) {
+            System.out.println("Could not load products on startup: " + e.getMessage());
+        }
     }
 
     @Scheduled(fixedRate = 300000)
     public void refreshProducts() {
-        Product[] fetchedProducts = restTemplate.getForObject(
-                "https://fakestoreapi.com/products",
-                Product[].class
-        );
+        try {
+            Product[] fetchedProducts = restTemplate.getForObject(
+                    "https://fakestoreapi.com/products",
+                    Product[].class
+            );
 
-        products.clear();
-
-        if (fetchedProducts != null) {
-            for (Product product : fetchedProducts) {
-                products.put(product.getId(), product);
+            if (fetchedProducts != null) {
+                products.clear();
+                for (Product product : fetchedProducts) {
+                    products.put(product.getId(), product);
+                }
+                System.out.println("Products updated: " + products.size());
             }
+        } catch (Exception e) {
+            System.out.println("Failed to refresh products: " + e.getMessage());
         }
-
-        System.out.println("Products updated: " + products.size());
-    }
-
-    public Collection<Product> getAllProducts() {
-        return products.values();
-    }
-
-    public Product getProductById(Long id) {
-        return products.get(id);
     }
 }
