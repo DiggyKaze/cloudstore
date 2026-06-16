@@ -1,0 +1,24 @@
+name: Smoke Test
+
+on:
+  workflow_call: # Gör att filen kan anropas från din huvud-pipeline (ci-cd.yml)
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # Kör Gradle-testet. Om appen inte kompilerar eller testerna failar, stoppar pipelinen här.
+      - name: Run Spring Boot Smoke Test
+        run: ./gradlew check --no-daemon
