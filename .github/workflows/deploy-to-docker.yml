@@ -1,12 +1,7 @@
 name: Build and Push Docker Image
 
 on:
-  push:
-    branches:
-      - main
-    # Optional: also trigger on version tags for release builds
-    # tags:
-    #   - 'v*'
+  workflow_call:
 
 env:
   IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/your-image-name
