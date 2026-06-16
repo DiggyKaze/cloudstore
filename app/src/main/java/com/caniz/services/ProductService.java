@@ -45,4 +45,12 @@ public class ProductService {
             System.out.println("Failed to refresh products: " + e.getMessage());
         }
     }
+
+    public Collection<Product> getAllProducts() {
+        return products.values();
+    }
+
+    public Product getProductById(Long id) {
+        return products.get(id);
+    }
 }
