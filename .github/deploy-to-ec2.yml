@@ -1,10 +1,10 @@
-name: Build and Push Docker Image
+name: Deploy to Docker Hub
 
 on:
   workflow_call:
 
 env:
-  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/your-image-name
+  IMAGE_NAME: diggykaze/intro-java
 
 jobs:
   build-and-push:
@@ -29,11 +29,8 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            # Tag with branch name (e.g. "main")
             type=ref,event=branch
-            # Tag with short commit SHA (e.g. "sha-a1b2c3d")
             type=sha,prefix=sha-,format=short
-            # Tag as "latest" on pushes to main
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Docker image
@@ -43,6 +40,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # Cache layers between runs to speed up builds
           cache-from: type=gha
           cache-to: type=gha,mode=max

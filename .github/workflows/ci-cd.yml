@@ -1,0 +1,16 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-to-docker:
+    uses: ./.github/workflows/deploy-to-docker.yml
+    secrets: inherit
+
+  deploy-to-ec2:
+    needs: deploy-to-docker
+    uses: ./.github/workflows/deploy-to-ec2.yml
+    secrets: inherit
