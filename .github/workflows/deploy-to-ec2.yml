@@ -53,7 +53,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_IPADRESS }}
           username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
+          key: ${{ secrets.EC2_KEY }}
           script: |
             # 1. Logga in på Docker Hub inifrån din EC2
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
