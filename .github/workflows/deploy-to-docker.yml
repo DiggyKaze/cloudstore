@@ -9,10 +9,16 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # Här är ändringen till Java 21!
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -29,12 +35,12 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            # Tag with branch name (e.g. "main")
             type=ref,event=branch
-            # Tag with short commit SHA (e.g. "sha-a1b2c3d")
             type=sha,prefix=sha-,format=short
-            # Tag as "latest" on pushes to main
             type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -43,6 +49,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # Cache layers between runs to speed up builds
           cache-from: type=gha
           cache-to: type=gha,mode=max
