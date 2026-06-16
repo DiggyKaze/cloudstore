@@ -42,3 +42,28 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  # HÄR LÄGGER DU TILL DET (LÄNGST NER I FILEN):
+  deploy-to-ec2:
+    needs: build-and-push # Gör att deployen väntar tills bilden har tryckts upp till Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # 1. Logga in på Docker Hub inifrån din EC2
+            echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+            
+            # 2. Hämta den senaste bilden
+            docker pull diggykaze/intro-java:latest
+            
+            # 3. Stoppa och ta bort den gamla containern om den körs
+            docker stop intro-java-app || true
+            docker rm intro-java-app || true
+            
+            # 4. Starta appen på nytt med den nya koden
+            docker run -d -p 80:8080 --name intro-java-app diggykaze/intro-java:latest
