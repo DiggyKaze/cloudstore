@@ -6,15 +6,21 @@ on:
       - main
 
 jobs:
-  smoke-test:
-    uses: ./.github/workflows/smoke-test.yml
+  junit-test:
+    uses: ./.github/workflows/junit-test.yml
     secrets: inherit
-  
+
   deploy-to-docker:
+    needs: junit-test
     uses: ./.github/workflows/deploy-to-docker.yml
     secrets: inherit
 
   deploy-to-ec2:
     needs: deploy-to-docker
     uses: ./.github/workflows/deploy-to-ec2.yml
+    secrets: inherit
+
+  smoke-test:
+    needs: deploy-to-ec2
+    uses: ./.github/workflows/smoke-test.yml
     secrets: inherit
