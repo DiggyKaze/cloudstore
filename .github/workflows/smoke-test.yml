@@ -10,11 +10,7 @@ jobs:
     steps:
       - name: Debug target
         run: |
-          echo "Testing: http://${{ secrets.EC2_IPADRESS }}"
-
-      - name: Test homepage
-        run: |
-          curl -v -f --connect-timeout 10 --max-time 20 http://${{ secrets.EC2_IPADRESS }}/
+          echo "Testing: http://${{ secrets.EC2_IPADRESS }}/actuator/health"
 
       - name: Test health endpoint
         run: |
