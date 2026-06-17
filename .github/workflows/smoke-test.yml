@@ -10,8 +10,8 @@ jobs:
     steps:
       - name: Test deployed app health endpoint
         run: |
-          curl -f http://${{ secrets.EC2_IPADRESS }}:8081/actuator/health
+          curl -f http://${{ secrets.EC2_IPADRESS }}/actuator/health
 
       - name: Test products endpoint
         run: |
-          curl -f http://${{ secrets.EC2_IPADRESS }}:8081/products
+          curl -f http://${{ secrets.EC2_IPADRESS }}/products
