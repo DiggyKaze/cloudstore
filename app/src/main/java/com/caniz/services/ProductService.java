@@ -2,7 +2,6 @@ package com.caniz.services;
 
 import com.caniz.models.Product;
 import jakarta.annotation.PostConstruct;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,19 +11,33 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-@EnableScheduling
 public class ProductService {
 
     private final Map<Long, Product> products = new ConcurrentHashMap<>();
+
     private final RestTemplate restTemplate = createRestTemplateWithUserAgent();
+
+    private static RestTemplate createRestTemplateWithUserAgent() {
+        RestTemplate template = new RestTemplate();
+        template.getInterceptors().add((request, body, execution) -> {
+            request.getHeaders().set(
+                    "User-Agent",
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            );
+            return execution.execute(request, body);
+        });
+        return template;
+    }
 
     @PostConstruct
     public void loadProductsOnStartup() {
         refreshProducts();
     }
 
-    @Scheduled(fixedRate = 300000)
+    @Scheduled(fixedDelay = 300000)
     public void refreshProducts() {
+        System.out.println("Scheduled product refresh started");
+
         try {
             Product[] fetchedProducts = restTemplate.getForObject(
                     "https://fakestoreapi.com/products",
@@ -42,6 +55,7 @@ public class ProductService {
                 return;
             }
 
+            System.out.println("FakeStore API returned no products");
             loadFallbackProducts();
 
         } catch (Exception e) {
@@ -52,38 +66,39 @@ public class ProductService {
 
     private void loadFallbackProducts() {
         if (!products.isEmpty()) {
+            System.out.println("Keeping existing products: " + products.size());
             return;
         }
 
         Product p1 = new Product();
         p1.setId(1L);
-        p1.setTitle("Fallback Product 1");
-        p1.setPrice(199.0);
-        p1.setDescription("Product loaded locally because FakeStore API was unavailable.");
-        p1.setCategory("fallback");
-        p1.setImage("https://via.placeholder.com/150");
+        p1.setTitle("Fjällräven Backpack");
+        p1.setPrice(109.95);
+        p1.setDescription("Fallback product because FakeStore API is unavailable from EC2.");
+        p1.setCategory("men's clothing");
+        p1.setImage("https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg");
 
         Product p2 = new Product();
         p2.setId(2L);
-        p2.setTitle("Fallback Product 2");
-        p2.setPrice(299.0);
-        p2.setDescription("Product loaded locally because FakeStore API was unavailable.");
-        p2.setCategory("fallback");
-        p2.setImage("https://via.placeholder.com/150");
+        p2.setTitle("Mens Casual Premium Slim Fit T-Shirt");
+        p2.setPrice(22.30);
+        p2.setDescription("Fallback product because FakeStore API is unavailable from EC2.");
+        p2.setCategory("men's clothing");
+        p2.setImage("https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg");
+
+        Product p3 = new Product();
+        p3.setId(3L);
+        p3.setTitle("Samsung 49-Inch Monitor");
+        p3.setPrice(999.99);
+        p3.setDescription("Fallback product because FakeStore API is unavailable from EC2.");
+        p3.setCategory("electronics");
+        p3.setImage("https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg");
 
         products.put(p1.getId(), p1);
         products.put(p2.getId(), p2);
+        products.put(p3.getId(), p3);
 
         System.out.println("Fallback products loaded: " + products.size());
-    }
-
-    private static RestTemplate createRestTemplateWithUserAgent() {
-        RestTemplate template = new RestTemplate();
-        template.getInterceptors().add((request, body, execution) -> {
-            request.getHeaders().set("User-Agent", "Mozilla/5.0");
-            return execution.execute(request, body);
-        });
-        return template;
     }
 
     public Collection<Product> getAllProducts() {
