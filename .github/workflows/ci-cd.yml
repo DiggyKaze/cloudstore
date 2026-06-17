@@ -7,7 +7,7 @@ on:
 
 jobs:
   junit-test:
-    uses: ./.github/workflows/junit-test.yml
+    uses: ./.github/workflows/junit-gradle-tester.yml
     secrets: inherit
 
   deploy-to-docker:
