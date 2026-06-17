@@ -8,10 +8,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Test deployed app health endpoint
+      - name: Debug target
         run: |
-          curl -f http://${{ secrets.EC2_IPADRESS }}/actuator/health
+          echo "Testing: http://${{ secrets.EC2_IPADRESS }}"
 
-      - name: Test products endpoint
+      - name: Test homepage
         run: |
-          curl -f http://${{ secrets.EC2_IPADRESS }}/products
+          curl -v -f --connect-timeout 10 --max-time 20 http://${{ secrets.EC2_IPADRESS }}/
+
+      - name: Test health endpoint
+        run: |
+          curl -v -f --connect-timeout 10 --max-time 20 http://${{ secrets.EC2_IPADRESS }}/actuator/health
