@@ -3,8 +3,6 @@
 Short description of what this application does.
 
 
-
-
 ---
 
 ## Table of Contents
@@ -148,4 +146,302 @@ v<MAJOR>.<MINOR>.<PATCH>
 MAJOR — breaking changes
 MINOR — new features, backwards compatible
 PATCH — bug fixes
+```
+## model
+```mermaid
+classDiagram
+
+direction TB
+
+%% Domain Models
+
+class AppUser {
+
++String username
+
++String email
+
++String password
+
++getUsername() String
+
++getEmail() String
+
++getPassword() String
+
+}
+
+class Product {
+
++Long id
+
++String title
+
++Double price
+
++String description
+
++String category
+
++String image
+
+}
+
+class User {
+
+-Long id
+
+-String name
+
+-String email
+
++User(name, email)
+
++getId() Long
+
++getName() String
+
++getEmail() String
+
++equals(Object) boolean
+
++hashCode() int
+
+}
+
+%% DTOs
+
+class LoginDto {
+
++String username
+
++String password
+
+}
+
+class RegisterDto {
+
++String username
+
++String email
+
++String password
+
+}
+
+%% Repositories
+
+class UserRepository {
+
+<<interface>>
+
++findByName(String) Optional~User~
+
++findByEmail(String) Optional~User~
+
++findAll() List~User~
+
+}
+
+class FakeUserRepository {
+
+-ConcurrentHashMap store
+
+-ConcurrentHashMap emailIndex
+
+-ConcurrentHashMap nameIndex
+
+-AtomicLong idSequence
+
++save(User) User
+
++findById(Long) Optional~User~
+
++findByName(String) Optional~User~
+
++findByEmail(String) Optional~User~
+
++delete(User) void
+
++count() long
+
+}
+
+%% Services
+
+class UserService {
+
+-Map~String,AppUser~ users
+
+-UserRepository userRepository
+
+-PasswordEncoder passwordEncoder
+
+-JwtUtil jwtUtil
+
++register(String, String, String) void
+
++login(String, String) String
+
++findByUsername(String) AppUser
+
++findAll() List~AppUser~
+
+}
+
+class ProductService {
+
+-Map~Long,Product~ products
+
+-RestTemplate restTemplate
+
++loadProductsOnStartup() void
+
++refreshProducts() void
+
++getAllProducts() Collection~Product~
+
++getProductById(Long) Product
+
+}
+
+%% Controllers
+
+class AuthController {
+
+-UserService userService
+
++registerPage(Model) String
+
++register(RegisterDto, Model) String
+
++loginPage() String
+
++login(String, String, HttpServletResponse, Model) String
+
+}
+
+class AuthRestController {
+
+-UserService userService
+
++login(LoginDto) ResponseEntity
+
++register(RegisterDto) ResponseEntity
+
+}
+
+class ProductController {
+
+-ProductService productService
+
++products(Model) String
+
+}
+
+class OrderController {
+
++orders(Model) String
+
++createOrder() String
+
++orderConfirmation() String
+
+}
+
+class HomeController {
+
++index(Model) String
+
+}
+
+class RedirectController {
+
++redirectToSwagger() String
+
+}
+
+%% Security
+
+class JwtUtil {
+
+-String secret
+
+-long EXPIRATION
+
++generateToken(String) String
+
++extractUsername(String) String
+
++validateToken(String) boolean
+
+-getKey() SecretKey
+
+}
+
+class JwtFilter {
+
+-JwtUtil jwtUtil
+
+#doFilterInternal(request, response, chain) void
+
+}
+
+class SecurityConfig {
+
+-JwtFilter jwtFilter
+
++passwordEncoder() PasswordEncoder
+
++securityFilterChain(HttpSecurity) SecurityFilterChain
+
+}
+
+class OncePerRequestFilter {
+
+<<abstract>>
+
+}
+
+class CrudRepository {
+
+<<interface>>
+
+}
+
+%% Relationships
+
+FakeUserRepository ..|> UserRepository : implements
+
+UserRepository --|> CrudRepository : extends
+
+JwtFilter --|> OncePerRequestFilter : extends
+
+UserService --> UserRepository : uses
+
+UserService --> JwtUtil : uses
+
+UserService --> AppUser : manages
+
+ProductService --> Product : manages
+
+AuthController --> UserService : uses
+
+AuthController --> RegisterDto : uses
+
+AuthRestController --> UserService : uses
+
+AuthRestController --> LoginDto : uses
+
+AuthRestController --> RegisterDto : uses
+
+ProductController --> ProductService : uses
+
+JwtFilter --> JwtUtil : uses
+
+SecurityConfig --> JwtFilter : uses
+
+UserRepository ..> User : manages
+
+FakeUserRepository ..> User : manages
 ```
