@@ -15,30 +15,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @EnableScheduling
 public class ProductService {
 
-    
-
     private final Map<Long, Product> products = new ConcurrentHashMap<>();
-
     private final RestTemplate restTemplate = createRestTemplateWithUserAgent();
-
-    private static RestTemplate createRestTemplateWithUserAgent() {
-        RestTemplate template = new RestTemplate();
-        template.getInterceptors().add((request, body, execution) -> {
-            request.getHeaders().set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36");
-            return execution.execute(request, body);
-        });
-        return template;
-    }
-
-
 
     @PostConstruct
     public void loadProductsOnStartup() {
-        try {
-            refreshProducts();
-        } catch (Exception e) {
-            System.out.println("Could not load products on startup: " + e.getMessage());
-        }
+        refreshProducts();
     }
 
     @Scheduled(fixedRate = 300000)
@@ -49,16 +31,59 @@ public class ProductService {
                     Product[].class
             );
 
-            if (fetchedProducts != null) {
+            if (fetchedProducts != null && fetchedProducts.length > 0) {
                 products.clear();
+
                 for (Product product : fetchedProducts) {
                     products.put(product.getId(), product);
                 }
-                System.out.println("Products updated: " + products.size());
+
+                System.out.println("Products updated from FakeStore API: " + products.size());
+                return;
             }
+
+            loadFallbackProducts();
+
         } catch (Exception e) {
-            System.out.println("Failed to refresh products: " + e.getMessage());
+            System.out.println("Failed to refresh products from FakeStore API: " + e.getMessage());
+            loadFallbackProducts();
         }
+    }
+
+    private void loadFallbackProducts() {
+        if (!products.isEmpty()) {
+            return;
+        }
+
+        Product p1 = new Product();
+        p1.setId(1L);
+        p1.setTitle("Fallback Product 1");
+        p1.setPrice(199.0);
+        p1.setDescription("Product loaded locally because FakeStore API was unavailable.");
+        p1.setCategory("fallback");
+        p1.setImage("https://via.placeholder.com/150");
+
+        Product p2 = new Product();
+        p2.setId(2L);
+        p2.setTitle("Fallback Product 2");
+        p2.setPrice(299.0);
+        p2.setDescription("Product loaded locally because FakeStore API was unavailable.");
+        p2.setCategory("fallback");
+        p2.setImage("https://via.placeholder.com/150");
+
+        products.put(p1.getId(), p1);
+        products.put(p2.getId(), p2);
+
+        System.out.println("Fallback products loaded: " + products.size());
+    }
+
+    private static RestTemplate createRestTemplateWithUserAgent() {
+        RestTemplate template = new RestTemplate();
+        template.getInterceptors().add((request, body, execution) -> {
+            request.getHeaders().set("User-Agent", "Mozilla/5.0");
+            return execution.execute(request, body);
+        });
+        return template;
     }
 
     public Collection<Product> getAllProducts() {
