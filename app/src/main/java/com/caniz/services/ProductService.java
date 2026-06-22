@@ -1,5 +1,4 @@
-```java
-        package com.caniz.services;
+package com.caniz.services;
 
 import com.caniz.models.Product;
 import jakarta.annotation.PostConstruct;
