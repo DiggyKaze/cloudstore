@@ -14,7 +14,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
-    // findById(Long id) is already declared by CrudRepository<User, Long>
+
     @Override
     List<User> findAll();
 }

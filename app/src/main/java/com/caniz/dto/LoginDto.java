@@ -1,5 +1,5 @@
 package com.caniz.dto;
-
+// specifict bara för swagger
 public class LoginDto {
 
     private String username;

@@ -22,7 +22,7 @@ public class AuthController {
         model.addAttribute("registerDto", new RegisterDto());
         return "register";
     }
-
+    // använder RegisterDTO
     @PostMapping("/register")
     public String register(@ModelAttribute RegisterDto dto, Model model) {
         try {
@@ -38,7 +38,7 @@ public class AuthController {
     public String loginPage() {
         return "login";
     }
-
+    // istället för LoginDto, kör med Rquestparam
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, HttpServletResponse response, Model model) {
 
