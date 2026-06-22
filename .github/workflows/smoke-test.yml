@@ -14,4 +14,16 @@ jobs:
 
       - name: Test health endpoint
         run: |
-          curl -v -f --connect-timeout 10 --max-time 20 http://${{ secrets.EC2_IPADRESS }}/actuator/health
+          for i in {1..30}; do
+            echo "Attempt $i..."
+            if curl -v -f --connect-timeout 10 --max-time 20 http://${{ secrets.EC2_IPADRESS }}/actuator/health; then
+              echo "Smoke test passed"
+              exit 0
+            fi
+
+            echo "App not ready yet, retrying in 5 seconds..."
+            sleep 5
+          done
+
+          echo "Smoke test failed"
+          exit 1
