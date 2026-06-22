@@ -38,7 +38,7 @@ public class AuthController {
     public String loginPage() {
         return "login";
     }
-    // istället för LoginDto, kör med Rquestparam
+
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, HttpServletResponse response, Model model) {
 
