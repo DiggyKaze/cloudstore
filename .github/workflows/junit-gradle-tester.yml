@@ -11,10 +11,6 @@ jobs:
       run:
         working-directory: app
 
-    env:
-      SPRING_PROFILES_ACTIVE: stage
-      JWT_SECRET: testSecretKey123456789012345678901234567890
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -26,11 +22,4 @@ jobs:
           distribution: 'temurin'
 
       - name: Run JUnit tests
-        run: gradle test --no-daemon --stacktrace --info
-
-      - name: Upload test report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: junit-test-report
-          path: app/build/reports/tests/test/
+        run: gradle test --no-daemon
