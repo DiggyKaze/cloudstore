@@ -6,6 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -14,15 +15,25 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            # 1. Logga in på Docker Hub inifrån din EC2
+            echo "Logging in to Docker Hub..."
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-            
-            # 2. Hämta den senaste bilden
+
+            echo "Pulling latest Docker image..."
             docker pull diggykaze/intro-java:latest
-            
-            # 3. Stoppa och ta bort den gamla containern om den körs
+
+            echo "Stopping old container..."
             docker stop intro-java-app || true
             docker rm intro-java-app || true
-            
-            # 4. Starta appen på nytt (mappad till port 80 utåt)
-            docker run -d -p 80:8080 --name intro-java-app diggykaze/intro-java:latest
+
+            echo "Starting new container with prod profile..."
+            docker run -d \
+              -p 80:8080 \
+              --name intro-java-app \
+              -e SPRING_PROFILES_ACTIVE=prod \
+              -e SPRING_DATASOURCE_URL="${{ secrets.DB_URL }}" \
+              -e SPRING_DATASOURCE_USERNAME="${{ secrets.DB_USERNAME }}" \
+              -e SPRING_DATASOURCE_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+              -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+              diggykaze/intro-java:latest
+
+            echo "Deployment finished."
