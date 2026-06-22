@@ -10,9 +10,7 @@ jobs:
     defaults:
       run:
         working-directory: app
-    env:
-      SPRING_PROFILES_ACTIVE: stage
-      JWT_SECRET_TEST: ${{ secrets.JWT_SECRET_TEST }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
