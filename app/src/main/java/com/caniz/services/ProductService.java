@@ -17,14 +17,15 @@ public class ProductService {
     private final Map<Long, Product> products = new ConcurrentHashMap<>();
     private final WebClient webClient;
 
-    public ProductService(WebClient.Builder builder) {
-        this.webClient = builder
+    public ProductService() {
+        this.webClient = WebClient.builder()
                 .baseUrl("https://fakestoreapi.com")
                 .defaultHeader(
                         "User-Agent",
                         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
                                 "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
                 )
+                .defaultHeader("Accept", "application/json")
                 .build();
     }
 
