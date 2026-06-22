@@ -1,11 +1,13 @@
-package com.caniz.services;
+```java
+        package com.caniz.services;
 
 import com.caniz.models.Product;
 import jakarta.annotation.PostConstruct;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,19 +16,17 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ProductService {
 
     private final Map<Long, Product> products = new ConcurrentHashMap<>();
+    private final WebClient webClient;
 
-    private final RestTemplate restTemplate = createRestTemplateWithUserAgent();
-
-    private static RestTemplate createRestTemplateWithUserAgent() {
-        RestTemplate template = new RestTemplate();
-        template.getInterceptors().add((request, body, execution) -> {
-            request.getHeaders().set(
-                    "User-Agent",
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-            );
-            return execution.execute(request, body);
-        });
-        return template;
+    public ProductService(WebClient.Builder builder) {
+        this.webClient = builder
+                .baseUrl("https://fakestoreapi.com")
+                .defaultHeader(
+                        "User-Agent",
+                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+                                "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+                )
+                .build();
     }
 
     @PostConstruct
@@ -39,10 +39,11 @@ public class ProductService {
         System.out.println("Scheduled product refresh started");
 
         try {
-            Product[] fetchedProducts = restTemplate.getForObject(
-                    "https://fakestoreapi.com/products",
-                    Product[].class
-            );
+            Product[] fetchedProducts = webClient.get()
+                    .uri("/products")
+                    .retrieve()
+                    .bodyToMono(Product[].class)
+                    .block(Duration.ofSeconds(10));
 
             if (fetchedProducts != null && fetchedProducts.length > 0) {
                 products.clear();
@@ -74,7 +75,7 @@ public class ProductService {
         p1.setId(1L);
         p1.setTitle("Fjällräven Backpack");
         p1.setPrice(109.95);
-        p1.setDescription("Fallback product because FakeStore API is unavailable from EC2.");
+        p1.setDescription("Fallback product because FakeStore API is unavailable.");
         p1.setCategory("men's clothing");
         p1.setImage("https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg");
 
@@ -82,7 +83,7 @@ public class ProductService {
         p2.setId(2L);
         p2.setTitle("Mens Casual Premium Slim Fit T-Shirt");
         p2.setPrice(22.30);
-        p2.setDescription("Fallback product because FakeStore API is unavailable from EC2.");
+        p2.setDescription("Fallback product because FakeStore API is unavailable.");
         p2.setCategory("men's clothing");
         p2.setImage("https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg");
 
@@ -90,7 +91,7 @@ public class ProductService {
         p3.setId(3L);
         p3.setTitle("Samsung 49-Inch Monitor");
         p3.setPrice(999.99);
-        p3.setDescription("Fallback product because FakeStore API is unavailable from EC2.");
+        p3.setDescription("Fallback product because FakeStore API is unavailable.");
         p3.setCategory("electronics");
         p3.setImage("https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg");
 
@@ -109,3 +110,4 @@ public class ProductService {
         return products.get(id);
     }
 }
+
