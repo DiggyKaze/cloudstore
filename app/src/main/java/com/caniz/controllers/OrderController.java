@@ -21,7 +21,6 @@ public class OrderController {
     public String createOrder() {
         return "redirect:/order-confirmation";
     }
-
     @GetMapping("/order-confirmation")
     public String orderConfirmation() {
         return "order-confirmation";

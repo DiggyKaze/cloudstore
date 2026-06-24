@@ -14,7 +14,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ProductService {
 
     private final Map<Long, Product> products = new ConcurrentHashMap<>();
-
     private final RestTemplate restTemplate = createRestTemplateWithUserAgent();
 
     private static RestTemplate createRestTemplateWithUserAgent() {
@@ -29,7 +28,6 @@ public class ProductService {
             request.getHeaders().set("Accept", "application/json");
             return execution.execute(request, body);
         });
-
         return template;
     }
 
@@ -67,7 +65,7 @@ public class ProductService {
             loadFallbackProducts();
         }
     }
-
+    // fallback products för att jag ska kunna få produkter att visa
     private void loadFallbackProducts() {
         if (!products.isEmpty()) {
             System.out.println("Keeping existing products: " + products.size());
@@ -108,7 +106,6 @@ public class ProductService {
     public Collection<Product> getAllProducts() {
         return products.values();
     }
-
     public Product getProductById(Long id) {
         return products.get(id);
     }

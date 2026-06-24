@@ -124,17 +124,14 @@ public class FakeUserRepository implements UserRepository {
     public synchronized void delete(User user) {
         deleteById(user.getId());
     }
-
     @Override
     public synchronized void deleteAll(Iterable<? extends User> users) {
         users.forEach(this::delete);
     }
-
     @Override
     public synchronized void deleteAllById(Iterable<? extends Long> ids) {
         ids.forEach(this::deleteById);
     }
-
     @Override
     public synchronized void deleteAll() {
         store.clear();

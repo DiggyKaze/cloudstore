@@ -18,7 +18,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(Model model) {
-
         model.addAttribute("title", "Home Page");
         model.addAttribute("message", "Welcome to CloudStore");
 

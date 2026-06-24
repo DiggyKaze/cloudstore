@@ -10,7 +10,7 @@ public class User {
     private Long id;
     private String name;
     private String email;
-// Required by JPA
+
     protected User() {
     }
     public User(String name, String email) {
